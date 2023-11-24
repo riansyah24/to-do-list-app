@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/dist/output.css" rel="stylesheet">
+  <link rel="icon" href="./89.jpeg">
+  <link rel="manifest" href="./manifest.json">
+  <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then(function (registration) {
+            console.log(
+              "Service worker terdaftar dengan skop: ",
+              registration.scope
+            );
+          })
+          .catch(function (error) {
+            console.log("Service worker gagal terdaftar: ", error);
+          });
+      } else {
+        console.log("Browser tidak mendukung service worker");
+      }
+    </script>
+  <title>To Do List App</title>
+</head>
+<body class="w-screen flex flex-col lg:hidden">
+  <!-- Input -->
+  <div class="w-full flex justify-between px-3 py-5">
+    <input type="text" id="input" class="border-b-2 border-blue-950 p-2">
+    <button onclick="submit()" class="bg-blue-950 text-white font-bold px-2 py-2 rounded">Submit</button>
+  </div>
+  <!-- List -->
+  <div id="list" class="flex flex-col p-2 gap-1 w-full text-blue-950 text-lg"></div>
+  <script>
+    let input = document.getElementById("input")
+    let list = document.getElementById("list")
+    
+    const submit = () => {
+      if(input.value == "") {
+        alert("Masukkan input")
+      }
+      else {
+      //List
+      let li = document.createElement("li")
+      li.className="flex justify-between list-none"
+      list.appendChild(li)
+
+      //Div
+      let div = document.createElement("div")
+      div.className="flex items-center gap-2"
+      li.appendChild(div)
+      
+      //Check
+      let check = document.createElement("input")
+      check.type = "checkbox"
+      div.appendChild(check)
+
+      //Label
+      let label = document.createElement("label")
+      label.innerText = input.value
+      div.appendChild(label)
+      
+      //Close 
+      let close = document.createElement("button")
+      close.innerText = "X"
+      li.appendChild(close)
+      close.addEventListener("click",() => {
+        list.removeChild(li)
+      })
+      
+      input.value = ""
+      }
+    }
+  </script>
+</body>
+</html>
